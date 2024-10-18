@@ -1,0 +1,15 @@
+#root {
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  header {
+    margin-top: 20px;
+      h2 {
+        font-size: 1.8rem;
+      }
+      span {
+        color: red;
+      }
+  }
+  
