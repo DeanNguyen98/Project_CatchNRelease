@@ -7,7 +7,7 @@ export const fetchData = async () => {
         const response = await fetch(pokeAPI);
         const data = await response.json();
         const selectedPokemon = [];
-        while (selectedPokemon.length < 9) {
+        while (selectedPokemon.length < 20) {
             const randomIndex = Math.floor(Math.random() * data.results.length);
             const selected = data.results.splice(randomIndex, 1)[0];
             if (selected) {
