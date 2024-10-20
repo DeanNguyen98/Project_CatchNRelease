@@ -2,7 +2,8 @@
     margin-top: 20px;
     display: flex;
     gap: 3rem;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
         .score-ctn {
             display: flex;
             gap: 2rem;
@@ -10,30 +11,25 @@
         }
 }
 .poke-ctn{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     h1 {
         margin-bottom: 20px;
     }
-    width: 40%;
 }
 
 .card-ctn {
-    display: flex;
+    display:grid;
+    grid-template-columns: repeat(10, auto);
     gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .card {
-    width: 150px;
-    height: 180px;
+    width: 120px;
+    height: 150px;
     position: relative;
     text-align: center;
-    transition: background .3s ease-in-out;
+    transition: background ease-in-out;
     transform-style: preserve-3d;
-    transition: 1s;
+    transition: .8s;
     transform: perspective(1000px) rotateY(var(--rotate-y, 0))
     translateY(var(--translate-y, 0));
 }
@@ -66,7 +62,7 @@
     transform: rotateY(180deg);
     img {
         width: 100%;
-        height: 180px;
+        height: 150px;
         object-fit: contain;
     }
 }
