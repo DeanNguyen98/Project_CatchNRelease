@@ -5,6 +5,7 @@ import { fetchData } from './components/PokeAPI';
 import GameScreen from './components/Gamescreen';
 import StartScreen from './components/StartScreen';
 import LoadingScreen from './components/LoadingScreen';
+import EndModal from './components/EndModal';
 
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -15,31 +16,45 @@ function App() {
   const [start, setStart] = useState(false);
   const [loading, setLoading] = useState(false);
   const [trainerName, setTrainerName] = useState("");
+  const [endCondition, setEndCondition] = useState(true);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const LOAD_TIME = 3000;
   useEffect(() => {
-    async function getPokemonData () {
-      try {
-        const data = fetchData();
-        setLoading(true);
-
-        await sleep(LOAD_TIME);
-
-        setPokemonData(await data);
-
-        setLoading(false);
-        setAllFlip(true);
-        setTimeout(setAllFlip, 1000);
-      } catch(error) {
-        console.error('Failed to get data', error);
+    if (start) {
+      async function getPokemonData () {
+        try {
+          const data = fetchData();
+          setLoading(true);
+  
+          await sleep(LOAD_TIME);
+  
+          setPokemonData(await data);
+  
+          setLoading(false);
+          setAllFlip(true);
+          setTimeout(() => setAllFlip(false), 1000);
+        } catch(error) {
+          console.error('Failed to get data', error);
+        }
       }
+      setStatement(
+        <>
+          Good luck, <span className="trainer-name">{trainerName}</span>!
+        </>
+      )
+      getPokemonData();
     }
-    getPokemonData();
+
   }, [start]);
+
+  useEffect(() => {
+    if (CaughtPokemons.length === 20) {
+      setEndCondition(true);
+    }
+  }, [CaughtPokemons]);
 
   function StartGame() {
     setStart(true);
-    console.log(pokemonData)
   }
   
   //Add caught pokemon to array 
@@ -81,7 +96,11 @@ function App() {
     newPokemonData.splice(cardIndex, 1);
     setPokemonData(newPokemonData);
     addCaughtPokemon(CaughtPokemon);
-    setStatement(`Nice! ${trainerName} caught a pokemon!`)
+    setStatement(
+      <>
+        Nice! <span className="trainer-name">{trainerName}</span> caught a pokemon!
+      </>
+    )
     //pass in new pokemon Data to trigger re render of the updated lists
     setAllFlip(true);
     setIsFlip(true);
@@ -95,7 +114,7 @@ function App() {
   }
 
   function randomizeCatch(id) {
-    const isSuccessful = Math.random() < 0.5;
+    const isSuccessful = true;
     if (!isSuccessful) {
       setStatement("You couldn't catch it. Try again!");
       //add a vibrate animation when clicking is unsuccessful
@@ -109,6 +128,12 @@ function App() {
       return;
     }
     catchPokemon(id);
+  }
+
+  function GameRestart() {
+    setStart(false);
+    setEndCondition(false);
+    setCaughtPokemons([]);
   }
 
   return (
@@ -135,8 +160,10 @@ function App() {
     caughtPokemons={CaughtPokemons}
     />
    )
-  
   }
+  {endCondition && (
+    <EndModal handleClick={GameRestart} />
+  )}
     </>
   )
 }
