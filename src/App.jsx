@@ -14,6 +14,7 @@ function App() {
   const [statement, setStatement] = useState('');
   const [start, setStart] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [trainerName, setTrainerName] = useState("");
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const LOAD_TIME = 3000;
   useEffect(() => {
@@ -29,7 +30,6 @@ function App() {
         setLoading(false);
         setAllFlip(true);
         setTimeout(setAllFlip, 1000);
-        console.log(flip);
       } catch(error) {
         console.error('Failed to get data', error);
       }
@@ -81,7 +81,7 @@ function App() {
     newPokemonData.splice(cardIndex, 1);
     setPokemonData(newPokemonData);
     addCaughtPokemon(CaughtPokemon);
-    setStatement('Nice! You caught the pokemon!')
+    setStatement(`Nice! ${trainerName} caught a pokemon!`)
     //pass in new pokemon Data to trigger re render of the updated lists
     setAllFlip(true);
     setIsFlip(true);
@@ -97,7 +97,15 @@ function App() {
   function randomizeCatch(id) {
     const isSuccessful = Math.random() < 0.5;
     if (!isSuccessful) {
-      setStatement("You couldn't catch it. Try again!")
+      setStatement("You couldn't catch it. Try again!");
+      //add a vibrate animation when clicking is unsuccessful
+      const card = document.getElementById(`${id}`);
+      if (card) {
+        card.classList.add('vibrate');
+        setTimeout(() => {
+          card.classList.remove('vibrate'); // Remove class after the animation completes
+        }, 500);
+      }
       return;
     }
     catchPokemon(id);
@@ -112,7 +120,9 @@ function App() {
       <p>Hint: Click on a pokemon to (try to) catch it</p>
     </header>
    {!start ? (
-    <StartScreen handleStartClick={StartGame} /> 
+    <StartScreen 
+    handleStartClick={StartGame}
+    setTrainerName={setTrainerName} /> 
    ) : loading ? (
     <LoadingScreen/>
    ) : (
