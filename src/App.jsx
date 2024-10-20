@@ -43,8 +43,8 @@ function App() {
   function catchPokemon (id) {
     const cardIndex = pokemonData.findIndex(pokemon => pokemon.id === id);
     const newPokemonData = [...pokemonData];
+    const CaughtPokemon = newPokemonData[cardIndex];
     newPokemonData.splice(cardIndex, 1);
-    const CaughtPokemon = newPokemonData.splice(cardIndex,1)[0];
     setPokemonData(newPokemonData);
     addCaughtPokemon(CaughtPokemon);
     //pass in new pokemon Data to trigger re render of the updated lists
