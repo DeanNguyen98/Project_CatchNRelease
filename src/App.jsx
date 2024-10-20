@@ -114,7 +114,7 @@ function App() {
   }
 
   function randomizeCatch(id) {
-    const isSuccessful = true;
+    const isSuccessful = Math.random() < 0.5;
     if (!isSuccessful) {
       setStatement("You couldn't catch it. Try again!");
       //add a vibrate animation when clicking is unsuccessful
