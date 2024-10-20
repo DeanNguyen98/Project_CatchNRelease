@@ -2,17 +2,24 @@
     margin-top: 20px;
     display: flex;
     gap: 3rem;
-    align-items: center;
+    align-items: flex-start;
         .score-ctn {
             display: flex;
             gap: 2rem;
             font-size: 1.3rem;
         }
 }
+.poke-ctn{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    h1 {
+        margin-bottom: 20px;
+    }
+    width: 40%;
+}
 
 .card-ctn {
-    width: 40%;
-    height: auto;
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
