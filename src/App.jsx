@@ -16,7 +16,7 @@ function App() {
   const [start, setStart] = useState(false);
   const [loading, setLoading] = useState(false);
   const [trainerName, setTrainerName] = useState("");
-  const [endCondition, setEndCondition] = useState(true);
+  const [endCondition, setEndCondition] = useState(false);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const LOAD_TIME = 3000;
   useEffect(() => {
