@@ -8,6 +8,7 @@ function App() {
   const [pokemonData, setPokemonData] = useState([]);
   const [CaughtPokemons, setCaughtPokemons] = useState([]);
   const [flip, setAllFlip] = useState(true);
+  const [isFlipping, setIsFlip] = useState(false)
   const [statement, setStatement] = useState('')
   useEffect(() => {
     async function getPokemonData () {
@@ -19,7 +20,7 @@ function App() {
       }
     }
     getPokemonData();
-    setTimeout(setAllFlip, 1000);
+    setTimeout(setAllFlip, 500);
   }, []);
   //Shuffle Card function 
   function shuffleCard(data) {
@@ -49,7 +50,6 @@ function App() {
     setPokemonData(prevPokemonData => [
       ...prevPokemonData, releasedPokemon
     ])
-    console.log(releasedPokemon);
   }
 
   //Catch pokemon function when a card is clicked
@@ -63,10 +63,12 @@ function App() {
     setStatement('Nice! You caught the pokemon!')
     //pass in new pokemon Data to trigger re render of the updated lists
     setAllFlip(true);
+    setIsFlip(true);
     setTimeout(() => {
       shuffleCard(newPokemonData);
       setTimeout(() => {
         setAllFlip(false);
+        setIsFlip(false);
       },500)
     }, 1000);
   }
@@ -92,7 +94,7 @@ function App() {
     pokemonData = {pokemonData}
     statement = {statement}
     flip={flip}
-    handleClick={randomizeCatch}
+    handleClick={isFlipping? true : randomizeCatch}
     handleRelease={releasePokemon}
     caughtPokemons={CaughtPokemons}
     />
