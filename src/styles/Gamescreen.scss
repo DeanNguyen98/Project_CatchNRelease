@@ -29,7 +29,7 @@
     text-align: center;
     transition: background ease-in-out;
     transform-style: preserve-3d;
-    transition: .8s;
+    transition: .5s;
     transform: perspective(1000px) rotateY(var(--rotate-y, 0))
     translateY(var(--translate-y, 0));
 }
@@ -66,4 +66,8 @@
         height: 150px;
         object-fit: contain;
     }
+}
+
+.trainer-name {
+    color: red;
 }
