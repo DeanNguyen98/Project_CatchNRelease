@@ -28,8 +28,8 @@ export default function StartScreen ({handleStartClick, setTrainerName}) {
                 {error && <p className="error">{error}</p>}
             </div>
             <div className="instructions">
-            <p>Instruction: There are 9 randomly generated pokemons to catch. Try not to catch a pokemon twice. </p>
-            <p>Let&apos;s catch them all, pokemon trainer</p>
+            <p>Instruction: There are 20 randomly generated pokemons to catch. You can release the pokemons that you have caught. You have a 50% chance to catch one pokemon. Try your best, trainer. </p>
+            <p>Let&apos;s catch them all!</p>
             </div>
         </div>
         </>
