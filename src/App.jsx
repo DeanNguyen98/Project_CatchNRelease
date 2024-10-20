@@ -8,6 +8,7 @@ function App() {
   const [pokemonData, setPokemonData] = useState([]);
   const [CaughtPokemons, setCaughtPokemons] = useState([]);
   const [flip, setAllFlip] = useState(true);
+  const [statement, setStatement] = useState('')
   useEffect(() => {
     async function getPokemonData () {
       try {
@@ -20,10 +21,9 @@ function App() {
     getPokemonData();
     setTimeout(setAllFlip, 1000);
   }, []);
-
   //Shuffle Card function 
-  function shuffleCard(pokemonData) {
-    const availableCards = [...pokemonData];
+  function shuffleCard(data) {
+    const availableCards = [...data];
     const shuffledPokemons = [];
     while (availableCards.length) {
       const index = Math.floor(Math.random() * availableCards.length);
@@ -39,6 +39,19 @@ function App() {
       ...prevPokemonData, pokemon
     ])
   }
+
+  //Remove pokemon from caught list
+  function releasePokemon (id) {
+    const releasedPokemon = CaughtPokemons.filter(pokemon => pokemon.id === id)[0];
+    setCaughtPokemons(prevCaughtPokemon => {
+      return prevCaughtPokemon.filter(pokemon => pokemon.id !== id);
+    })
+    setPokemonData(prevPokemonData => [
+      ...prevPokemonData, releasedPokemon
+    ])
+    console.log(releasedPokemon);
+  }
+
   //Catch pokemon function when a card is clicked
   function catchPokemon (id) {
     const cardIndex = pokemonData.findIndex(pokemon => pokemon.id === id);
@@ -47,6 +60,7 @@ function App() {
     newPokemonData.splice(cardIndex, 1);
     setPokemonData(newPokemonData);
     addCaughtPokemon(CaughtPokemon);
+    setStatement('Nice! You caught the pokemon!')
     //pass in new pokemon Data to trigger re render of the updated lists
     setAllFlip(true);
     setTimeout(() => {
@@ -55,6 +69,15 @@ function App() {
         setAllFlip(false);
       },500)
     }, 1000);
+  }
+
+  function randomizeCatch(id) {
+    const isSuccessful = Math.random() < 0.5;
+    if (!isSuccessful) {
+      setStatement("You couldn't catch it. Try again!")
+      return;
+    }
+    catchPokemon(id);
   }
 
   return (
@@ -67,8 +90,10 @@ function App() {
     </header>
     <GameScreen 
     pokemonData = {pokemonData}
+    statement = {statement}
     flip={flip}
-    handleClick={catchPokemon}
+    handleClick={randomizeCatch}
+    handleRelease={releasePokemon}
     caughtPokemons={CaughtPokemons}
     />
     </>
