@@ -11,6 +11,7 @@ export default function GameScreen(props) {
                     <div className="card-ctn">
                     {pokemonData.length > 0 && pokemonData.map(card => {
                     return <Card key={card.id} 
+                    id={card.id}
                     pokemon={card}
                     flip={flip}
                     handleClick={() => handleClick(card.id)}
@@ -20,6 +21,7 @@ export default function GameScreen(props) {
             </div>
             <div className="Caughtpkm-ctn poke-ctn">
                     <h1>Pokemon Acquired</h1>
+                    <p>Click on a pokemon to release it back to the wild</p>
                     <div className="card-ctn">
                     {caughtPokemons.length > 0 && caughtPokemons.map(card => {
                         // return Card component withoug flip and handleClick()

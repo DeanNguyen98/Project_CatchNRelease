@@ -1,7 +1,7 @@
-export default function Card({ pokemon, handleClick, flip }) {
+export default function Card({ pokemon, handleClick, flip, id }) {
     return (
       <>
-        <div className={`card ${flip ? "flip" : ""}`} onClick={handleClick}>
+        <div id = {id} className={`card ${flip ? "flip" : ""}`} onClick={handleClick}>
           {/* card-front */}
           <div className="card-front">
               <img src={pokemon.image} alt={pokemon.name} className="card-image"></img>
