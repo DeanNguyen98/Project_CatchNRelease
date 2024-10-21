@@ -19,8 +19,9 @@ Shows a loading screen while fetching data.
 
 Maintains two main states:
 
-pokemonData: Available Pokemon to catch
-CaughtPokemons: Pokemon that have been caught
+- pokemonData: Available Pokemon to catch
+
+- CaughtPokemons: Pokemon that have been caught
 
 
 
@@ -31,13 +32,14 @@ Players have a 50% chance to catch a Pokemon when clicking (randomizeCatch funct
 
 Successful catches:
 
-Move Pokemon from pokemonData to CaughtPokemons
+- Move Pokemon from pokemonData to CaughtPokemons
 
-Trigger card flip animations
+- Trigger card flip animations
 
-Shuffle remaining Pokemon
+- Shuffle remaining Pokemon
 
-Players can release caught Pokemon back to the wild
+- Players can release caught Pokemon back to the wild
+
 
 Game ends when 20 Pokemon are caught
 
@@ -47,27 +49,27 @@ Game ends when 20 Pokemon are caught
 
 GameScreen.jsx:
 
-Renders two sections: "Wild Pokemons" and "Pokemon Acquired"
+- Renders two sections: "Wild Pokemons" and "Pokemon Acquired"
 
-Maps through both Pokemon arrays to create card grids
+- Maps through both Pokemon arrays to create card grids
 
 
 PokemonCard.jsx:
 
-Individual card component with flip animation
+- Individual card component with flip animation
 
-Shows Pokemon image and name on front
+- Shows Pokemon image and name on front
 
-Has a card back design
+- Has a card back design
 
 
 ## API Integration (PokeAPI.jsx):
 
 
-Fetches from PokeAPI with a limit of 150 Pokemon
+- Fetches from PokeAPI with a limit of 150 Pokemon
 
-Randomly selects 20 Pokemon
+- Randomly selects 20 Pokemon
 
-Retrieves detailed data for each selected Pokemon
+- Retrieves detailed data for each selected Pokemon
 
-Creates objects with name, image, unique ID, and species
+- Creates objects with name, image, unique ID, and species
