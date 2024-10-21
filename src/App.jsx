@@ -7,6 +7,9 @@ import StartScreen from './components/StartScreen';
 import LoadingScreen from './components/LoadingScreen';
 import EndModal from './components/EndModal';
 
+//import db functions
+// import { dbService } from '../SQL/dbservice';
+
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
   const [CaughtPokemons, setCaughtPokemons] = useState([]);
@@ -47,11 +50,13 @@ function App() {
 
   }, [start]);
 
+  //set End condition when caughtPokemon array length is 20
   useEffect(() => {
     if (CaughtPokemons.length === 20) {
       setEndCondition(true);
     }
   }, [CaughtPokemons]);
+
 
   function StartGame() {
     setStart(true);
@@ -67,6 +72,13 @@ function App() {
   //Remove pokemon from caught list
   function releasePokemon (id) {
     const releasedPokemon = CaughtPokemons.filter(pokemon => pokemon.id === id)[0];
+
+    /*--------DB interaction: Reduce catch count for caught pokemon---------- */
+
+    // await dbService.release(CaughtPokemon.name)
+
+    /*------------------ */
+
     setCaughtPokemons(prevCaughtPokemon => {
       return prevCaughtPokemon.filter(pokemon => pokemon.id !== id);
     })
@@ -76,14 +88,14 @@ function App() {
   }
 
     //Shuffle Card function 
-    function shuffleCard(data) {
-      const availableCards = [...data];
-      const shuffledPokemons = [];
-      while (availableCards.length) {
-        const index = Math.floor(Math.random() * availableCards.length);
-        const card = availableCards[index];
-        shuffledPokemons.push(card);
-        availableCards.splice(index, 1);
+  function shuffleCard(data) {
+    const availableCards = [...data];
+    const shuffledPokemons = [];
+    while (availableCards.length) {
+      const index = Math.floor(Math.random() * availableCards.length);
+      const card = availableCards[index];
+      shuffledPokemons.push(card);
+      availableCards.splice(index, 1);
       }
       setPokemonData(shuffledPokemons);
     }
@@ -93,6 +105,12 @@ function App() {
     const cardIndex = pokemonData.findIndex(pokemon => pokemon.id === id);
     const newPokemonData = [...pokemonData];
     const CaughtPokemon = newPokemonData[cardIndex];
+    
+    /*--------DB interaction: insert caught pokemon to database---------- */
+
+    // await dbService.catchPokemon(CaughtPokemon.name, caughtPokemon.species)
+
+    /*------------------ */
     newPokemonData.splice(cardIndex, 1);
     setPokemonData(newPokemonData);
     addCaughtPokemon(CaughtPokemon);
@@ -101,7 +119,8 @@ function App() {
         Nice! <span className="trainer-name">{trainerName}</span> caught a pokemon!
       </>
     )
-    //pass in new pokemon Data to trigger re render of the updated lists
+
+    //pass in new pokemon Data to shuffleCard to trigger re shuffling of the updated lists
     setAllFlip(true);
     setIsFlip(true);
     setTimeout(() => {
@@ -125,6 +144,7 @@ function App() {
           card.classList.remove('vibrate'); // Remove class after the animation completes
         }, 500);
       }
+      //
       return;
     }
     catchPokemon(id);
